@@ -1,4 +1,3 @@
-
 # JOHARGRAM
 
 ### One Community. One World.
@@ -18,7 +17,14 @@ Global Photo & Video Sharing Social Media Platform.
 - Likes and Comments
 - Follow and Followers
 - Private Messaging
+- Voice Calls
+- Video Calls
+- Photo Filters
+- Video Filters
 - Notifications
+- Explore
+- Multiple Languages
+- Privacy and Security
 
 ## Technology
 - Flutter
@@ -30,3 +36,6 @@ Global Photo & Video Sharing Social Media Platform.
 - Tribal Gold: #D9A441
 - White: #FFFFFF
 - Deep Charcoal: #202A24
+
+## Tagline
+One Community. One World.
