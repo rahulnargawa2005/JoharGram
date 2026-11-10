@@ -1,0 +1,205 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(const JoharGramApp());
+
+const forestGreen = Color(0xFF176B45);
+const tribalGold = Color(0xFFD9A441);
+const deepCharcoal = Color(0xFF202A24);
+
+class JoharGramApp extends StatelessWidget {
+  const JoharGramApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'JOHARGRAM',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: forestGreen),
+        scaffoldBackgroundColor: const Color(0xFFF7F8F6),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: deepCharcoal,
+          elevation: 0,
+        ),
+      ),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedTab = 0;
+  final List<bool> liked = [false, false];
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = [
+      _homeFeed(),
+      const Center(child: Text('Explore coming soon')),
+      const Center(child: Text('Create a post coming soon')),
+      const Center(child: Text('Notifications coming soon')),
+      const Center(child: Text('Your profile coming soon')),
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('JOHARGRAM',
+            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1.2)),
+        actions: [
+          IconButton(
+            onPressed: () => _message('Messages will be added in a later build.'),
+            icon: const Icon(Icons.chat_bubble_outline),
+          ),
+        ],
+      ),
+      body: pages[selectedTab],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: selectedTab,
+        onDestinationSelected: (i) => setState(() => selectedTab = i),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.explore_outlined), label: 'Explore'),
+          NavigationDestination(icon: Icon(Icons.add_box_outlined), label: 'Create'),
+          NavigationDestination(icon: Icon(Icons.notifications_none), label: 'Alerts'),
+          NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+
+  Widget _homeFeed() => ListView(
+        padding: const EdgeInsets.only(bottom: 20),
+        children: [
+          _stories(),
+          _postCard(
+            index: 0,
+            name: 'JOHARGRAM Community',
+            handle: '@johargram',
+            caption: 'Welcome to JOHARGRAM — One Community. One World.',
+            icon: Icons.public,
+          ),
+          _postCard(
+            index: 1,
+            name: 'Discover India',
+            handle: '@discover',
+            caption: 'Share your moments, stories and creativity with the world.',
+            icon: Icons.landscape_outlined,
+          ),
+        ],
+      );
+
+  Widget _stories() => SizedBox(
+        height: 112,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          children: [
+            _story('Your story', Icons.add),
+            _story('Culture', Icons.auto_awesome),
+            _story('Nature', Icons.nature),
+            _story('Friends', Icons.people),
+            _story('Explore', Icons.public),
+          ],
+        ),
+      );
+
+  Widget _story(String label, IconData icon) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 7),
+        child: Column(
+          children: [
+            Container(
+              width: 62,
+              height: 62,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: tribalGold, width: 2.5),
+                color: forestGreen.withValues(alpha: 0.10),
+              ),
+              child: Icon(icon, color: forestGreen, size: 28),
+            ),
+            const SizedBox(height: 6),
+            Text(label, style: const TextStyle(fontSize: 12)),
+          ],
+        ),
+      );
+
+  Widget _postCard({
+    required int index,
+    required String name,
+    required String handle,
+    required String caption,
+    required IconData icon,
+  }) =>
+      Card(
+        margin: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+        color: Colors.white,
+        elevation: 0.5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                backgroundColor: forestGreen,
+                child: const Text('JG',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+              title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text(handle),
+              trailing: const Icon(Icons.more_horiz),
+            ),
+            Container(
+              height: 190,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                gradient: const LinearGradient(
+                  colors: [forestGreen, deepCharcoal],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Icon(icon, color: tribalGold, size: 72),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+              child: Text(caption),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => setState(() => liked[index] = !liked[index]),
+                  icon: Icon(
+                    liked[index] ? Icons.favorite : Icons.favorite_border,
+                    color: liked[index] ? Colors.red : deepCharcoal,
+                  ),
+                ),
+                const Text('Like'),
+                IconButton(
+                  onPressed: () => _message('Comments will be added in a later build.'),
+                  icon: const Icon(Icons.mode_comment_outlined),
+                ),
+                const Text('Comment'),
+                const Spacer(),
+                IconButton(
+                  onPressed: () => _message('Share feature will be added later.'),
+                  icon: const Icon(Icons.share_outlined),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+
+  void _message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+}
