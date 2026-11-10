@@ -1,0 +1,32 @@
+
+# JOHARGRAM
+
+### One Community. One World.
+
+Global Photo & Video Sharing Social Media Platform.
+
+## Platforms
+- Android
+- iOS
+- Website
+
+## Main Features
+- Photo Sharing
+- Video Sharing
+- Reels and Stories
+- User Profiles
+- Likes and Comments
+- Follow and Followers
+- Private Messaging
+- Notifications
+
+## Technology
+- Flutter
+- Firebase
+- Cloud Firestore
+
+## Brand Identity
+- Forest Green: #176B45
+- Tribal Gold: #D9A441
+- White: #FFFFFF
+- Deep Charcoal: #202A24
